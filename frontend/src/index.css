@@ -8,3 +8,12 @@
   --clr-lavender: #efe4f1;
   --clr-accent: #e0fe40;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #431c53;
+  padding: 2rem;
+}
