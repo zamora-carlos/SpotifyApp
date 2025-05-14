@@ -1,0 +1,118 @@
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #181818;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-family: sans-serif;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+.trackInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 200px;
+}
+
+.cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.songTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.artist {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  margin: 0;
+}
+
+.playingFrom {
+  font-size: 0.65rem;
+  color: #737373;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 600px;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: #d4d4d4;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.iconButton:hover,
+.playButton:hover {
+  color: #ffffff;
+}
+
+.playButton {
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 9999px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background-color: #404040;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  width: 45%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.time {
+  font-size: 0.7rem;
+  color: #a3a3a3;
+}
+
+.extraButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  min-width: 100px;
+}
