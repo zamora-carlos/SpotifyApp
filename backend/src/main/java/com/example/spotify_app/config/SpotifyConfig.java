@@ -17,5 +17,6 @@ public class SpotifyConfig {
     private String redirectUri;
 
     private final String tokenExchangeUrl = "https://accounts.spotify.com/api/token";
-    private final String authUrl = "http://accounts.spotify.com/authorize";
+    private final String authUrl = "https://accounts.spotify.com/authorize";
+    private final String apiUrl = "https://api.spotify.com/v1/";
 }
