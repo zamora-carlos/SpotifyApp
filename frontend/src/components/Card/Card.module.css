@@ -1,0 +1,36 @@
+.card {
+  display: block;
+  width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.text {
+  padding: 0.75rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
