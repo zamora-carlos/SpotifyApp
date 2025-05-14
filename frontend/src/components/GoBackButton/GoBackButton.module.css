@@ -1,0 +1,16 @@
+.button {
+  border: 2px solid white;
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  font-weight: bold;
+}
