@@ -3,70 +3,75 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  color: #f1e6f8;
-}
-
-@media (min-width: 768px) {
-  .hero {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
+  gap: 2rem;
+  padding-block: 6rem;
+  min-height: 100vh;
 }
 
 .content {
-  max-width: 500px;
+  width: 80%;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 1.25rem + 1.56vw, 4rem);
+  font-family: var(--font-heading);
+  color: var(--clr-lavender);
 }
 
 .text {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-  color: #e0d3e6;
+  font-size: clamp(1rem, 0.65rem + 0.47vw, 2rem);
+  margin-top: 1rem;
+  max-width: 40rem;
+  color: var(--clr-purple-light);
 }
 
-.subtext {
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-  color: #cdbbd5;
-}
-
-.imageContainer {
+.button {
+  font-size: clamp(1.25rem, 0.94rem + 0.52vw, 2.25rem);
+  width: 50%;
+  min-width: fit-content;
+  max-width: 12rem;
   margin-top: 2rem;
 }
 
-@media (min-width: 768px) {
-  .imageContainer {
-    margin-top: 0;
-  }
+.imageContainer {
+  position: relative;
+  width: 70%;
+  max-width: 32rem;
 }
 
 .imageBackground {
-  background-color: #f78fb4;
-  padding: 2rem;
-  border-radius: 2rem;
-  position: relative;
-}
-
-.image {
-  max-width: 250px;
-  height: auto;
-  border-radius: 2rem;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--clr-pink);
+  border-radius: 100vw;
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
 }
 
 .decoration {
+  display: none;
   position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border-radius: 50%;
-  box-shadow: -10px -20px 0 0 #f78fb4;
-  transform: rotate(45deg);
+  top: -1%;
+  right: 0;
+  height: 4rem;
+  transform: translateX(35%);
+}
+
+@media screen and (min-width: 48rem) {
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    padding-inline: 4rem;
+  }
+
+  .decoration {
+    display: unset;
+  }
+}
+
+@media screen and (min-width: 64rem) {
+  .decoration {
+    height: 5rem;
+    top: 2%;
+  }
 }

@@ -4,12 +4,22 @@ import styles from './Button.module.css';
 type ButtonProps = {
   onClick: () => void;
   children: React.ReactNode;
+  className: string;
   type?: 'button' | 'submit' | 'reset';
 };
 
-function Button({ onClick, children, type = 'button' }: ButtonProps) {
+function Button({
+  onClick,
+  children,
+  type = 'button',
+  className = '',
+}: ButtonProps) {
   return (
-    <button onClick={onClick} type={type} className={styles.button}>
+    <button
+      onClick={onClick}
+      type={type}
+      className={`${styles.button} ${className}`}
+    >
       {children}
     </button>
   );
