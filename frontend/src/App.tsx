@@ -1,49 +1,25 @@
-import { useState } from 'react';
-import SearchInput from '@components/SearchInput';
-import SelectDropdown from '@components/SelectDropdown';
-import Button from '@components/Button';
-import Card from '@components/Card';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from '@pages/LoginPage';
+import DashboardPage from '@pages/DashboardPage';
+import ArtistPage from '@pages/ArtistPage';
+import CallbackPage from '@pages/CallbackPage';
+import ProtectedRoute from '@components/ProtectedRoute';
+import { AuthProvider } from '@context/AuthContext';
 
-function App() {
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('Artists');
-
+export default function App() {
   return (
-    <div>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <SearchInput
-          id="search"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="What are you looking for?"
-        />
-        <SelectDropdown
-          id="category"
-          value={category}
-          onChange={e => setCategory(e.target.value)}
-          options={['Artists', 'Albums', 'Songs']}
-        />
-        <Button
-          onClick={() => alert(`Search: ${search}, Category: ${category}`)}
-        >
-          Search
-        </Button>
-      </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/callback" element={<CallbackPage />} />
 
-      <h2>My top artists —</h2>
-      <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Card
-            key={i}
-            title="Laufey"
-            subtitle="jazz, pop, bossa nova, and classica"
-            imageUrl="https://mundoindie.mx/wp-content/uploads/2025/04/Laufey-MEXICO.png"
-            link={'#'}
-          />
-        ))}
-      </div>
-    </div>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/artist/:id" element={<ArtistPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
-export default App;
