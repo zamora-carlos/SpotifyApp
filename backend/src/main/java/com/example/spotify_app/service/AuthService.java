@@ -67,7 +67,7 @@ public class AuthService {
         UserToken userToken = new UserToken();
         userToken.setAccessToken(spotifyResponse.getAccessToken());
         userToken.setRefreshToken(spotifyResponse.getRefreshToken());
-        userToken.setExpiresAt(Instant.now().plusMillis(spotifyResponse.getExpiresIn()));
+        userToken.setExpiresAt(Instant.now().plusSeconds(spotifyResponse.getExpiresIn()));
 
         tokenRepository.save(userToken);
 
