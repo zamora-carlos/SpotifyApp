@@ -1,11 +1,7 @@
 import HeroSection from '@components/HeroSection';
 
 function LoginPage() {
-  return (
-    <main className="container">
-      <HeroSection />
-    </main>
-  );
+  return <HeroSection />;
 }
 
 export default LoginPage;
