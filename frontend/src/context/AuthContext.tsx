@@ -1,3 +1,4 @@
+import { refreshToken } from '@lib/authApi';
 import {
   createContext,
   useContext,
@@ -30,6 +31,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
     const storedExpiresAt = localStorage.getItem('accessTokenExpiresAt');
+
+    console.log(storedExpiresAt, storedToken);
 
     if (storedToken && storedExpiresAt) {
       setAccessToken(storedToken);
@@ -73,22 +76,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       Date.now() >= accessTokenExpiresAt - bufferMs
     ) {
       try {
-        const response = await fetch(
-          'http://localhost:9090/api/v1/auth/refresh',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ accessToken }),
-          }
-        );
+        const data = await refreshToken(accessToken);
 
-        if (!response.ok) {
-          throw new Error(`Failed to refresh token: ${response.statusText}`);
-        }
+        console.log('token refreshed!, previous: ' + accessToken);
+        console.log('new token: ' + data.accessToken);
 
-        const data: TokenResponse = await response.json();
         login(data);
         return data.accessToken;
       } catch (error) {

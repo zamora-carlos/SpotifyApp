@@ -29,7 +29,8 @@
       "@pages/*": ["pages/*"],
       "@context/*": ["context/*"],
       "@assets/*": ["assets/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": ["src"]
