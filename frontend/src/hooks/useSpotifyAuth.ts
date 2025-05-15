@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@context/AuthContext';
-import type { TokenResponse } from 'types/token-response.types';
+import { exchangeCode } from '@lib/authApi';
 
 function useSpotifyAuth() {
   const location = useLocation();
@@ -18,22 +18,7 @@ function useSpotifyAuth() {
 
     const authenticate = async () => {
       try {
-        const response = await fetch(
-          'http://localhost:9090/api/v1/auth/token',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Failed to authenticate: ${response.statusText}`);
-        }
-
-        const data: TokenResponse = await response.json();
-        console.log(data);
-
+        const data = await exchangeCode(code);
         login(data);
         navigate('/', { replace: true });
       } catch (error) {
