@@ -1,10 +1,24 @@
-import styles from './HeroSection.module.css';
 import Button from '@components/Button';
 import heroImg from '@assets/images/hero-img.png';
+import styles from './HeroSection.module.css';
 
 function HeroSection() {
   const handleLogin = () => {
-    console.log('Login clicked');
+    const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+    const scopes = 'user-read-email user-top-read user-read-private';
+
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: scopes,
+      show_dialog: 'true',
+    });
+
+    const authUrl = `https://accounts.spotify.com/authorize?${params.toString()}`;
+
+    window.location.href = authUrl;
   };
 
   return (
