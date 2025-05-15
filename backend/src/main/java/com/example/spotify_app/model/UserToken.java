@@ -12,10 +12,10 @@ public class UserToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "access_token")
+    @Column(name = "access_token", length = 2048)
     private String accessToken;
 
-    @Column(name = "refresh_token")
+    @Column(name = "refresh_token", length = 1024)
     private String refreshToken;
 
     @Column(name = "expires_at")

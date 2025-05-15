@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<TokenResponse> refreshAccessToken(@RequestBody RefreshRequest request) {
-        TokenResponse response = authService.refreshAccessToken(request.getRefreshToken());
+        TokenResponse response = authService.refreshAccessToken(request.getAccessToken());
         return ResponseEntity.ok(response);
     }
 }
