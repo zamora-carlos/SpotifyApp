@@ -36,12 +36,21 @@ public class AuthService {
         return saveNewUserToken(spotifyResponse);
     }
 
-    public TokenResponse refreshAccessToken(String refreshToken) {
-        String requestBody = "refresh_token=" + refreshToken +
+    public TokenResponse refreshAccessToken(String accessToken) {
+        Optional<UserToken> userTokenOptional = tokenRepository.findByAccessToken(accessToken);
+
+        if (userTokenOptional.isPresent()) {
+            System.out.println(accessToken);
+            UserToken userToken = userTokenOptional.get();
+
+            String requestBody = "refresh_token=" + userToken.getRefreshToken() +
                 "&grant_type=refresh_token";
 
-        SpotifyTokenResponse spotifyResponse = makeHttpRequest(requestBody);
-        return updateUserToken(spotifyResponse);
+            SpotifyTokenResponse spotifyResponse = makeHttpRequest(requestBody);
+            return updateUserToken(accessToken, spotifyResponse);
+        } else {
+            throw new RuntimeException("No token entry found for the provided access token: " + accessToken);
+        }
     }
 
     private SpotifyTokenResponse makeHttpRequest(String requestBody) {
@@ -77,8 +86,8 @@ public class AuthService {
         );
     }
 
-    private TokenResponse updateUserToken(SpotifyTokenResponse spotifyResponse) {
-        Optional<UserToken> userTokenOptional = tokenRepository.findByAccessToken(spotifyResponse.getAccessToken());
+    private TokenResponse updateUserToken(String accessToken, SpotifyTokenResponse spotifyResponse) {
+        Optional<UserToken> userTokenOptional = tokenRepository.findByAccessToken(accessToken);
 
         if (userTokenOptional.isPresent()) {
             UserToken userToken = userTokenOptional.get();
