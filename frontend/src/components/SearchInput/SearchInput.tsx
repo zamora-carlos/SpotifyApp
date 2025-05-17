@@ -1,14 +1,23 @@
 import React from 'react';
+import { BiSearch } from 'react-icons/bi';
+import { MdOutlineClear } from 'react-icons/md';
 import styles from './SearchInput.module.css';
 
 type SearchInputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  className?: string;
   id: string;
 };
 
-function SearchInput({ value, onChange, placeholder, id }: SearchInputProps) {
+function SearchInput({
+  value,
+  onChange,
+  placeholder,
+  id,
+  className = '',
+}: SearchInputProps) {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor={id} className="sr-only">
@@ -19,12 +28,11 @@ function SearchInput({ value, onChange, placeholder, id }: SearchInputProps) {
         id={id}
         value={value}
         onChange={onChange}
-        className={styles.input}
+        className={`${styles.input} ${className}`}
         placeholder={placeholder}
       />
-      <span className={styles.icon} aria-hidden="true">
-        🔍
-      </span>
+      <BiSearch className={styles.searchIcon} />
+      <MdOutlineClear className={styles.cancelIcon} />
     </div>
   );
 }

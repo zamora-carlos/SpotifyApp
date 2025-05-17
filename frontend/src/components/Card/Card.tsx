@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import styles from './Card.module.css';
 
 type CardProps = {
   title: string;
   subtitle: string;
-  imageUrl?: string;
+  imageUrl: string;
   alt?: string;
   link: string;
 };
@@ -16,13 +17,13 @@ function Card({
   link,
 }: CardProps) {
   return (
-    <a href={link} className={styles.card} aria-label={`Go to ${title}`}>
-      {imageUrl && <img src={imageUrl} alt={alt} className={styles.image} />}
-      <div className={styles.text}>
+    <Link to={link} className={styles.card} aria-label={`Go to ${title}`}>
+      <img src={imageUrl} alt={alt} className={styles.image} />
+      <div>
         <h3 className={styles.title}>{title}</h3>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
-    </a>
+    </Link>
   );
 }
 

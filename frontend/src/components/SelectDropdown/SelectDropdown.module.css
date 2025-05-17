@@ -1,12 +1,37 @@
 .selectWrapper {
-  border-radius: 999px;
-  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .select {
   padding: 0.75rem 1.5rem;
+  width: 100%;
   font-size: 1rem;
-  border: none;
-  border-radius: 999px;
+  font-weight: 500;
+  border-radius: 100vw;
+  color: var(--clr-purple-light);
+  background-color: transparent;
   appearance: none;
+  border: 2px solid var(--clr-purple);
+  transition: border-color 200ms ease-in-out;
+  outline: none;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--clr-purple-light);
+}
+
+.icon {
+  position: absolute;
+  font-size: 1.5rem;
+  right: 1rem;
+  color: var(--clr-purple);
+  transition: color 200ms ease-in-out;
+  pointer-events: none;
+}
+
+.select:focus ~ .icon {
+  color: var(--clr-purple-light);
 }

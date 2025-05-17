@@ -1,15 +1,36 @@
 .button {
+  position: relative;
   font-family: var(--font-heading);
   font-size: 1.25rem;
   background-color: var(--clr-accent);
   color: var(--clr-purple-dark);
-  padding: 0.5rem 2.5rem;
-  border: none;
+  padding: 0.6875rem 2.5rem;
   border-radius: 100vw;
   cursor: pointer;
-  transition: background-color 200ms ease-in-out;
+  border: none;
+  outline: none;
+  transition:
+    background-color 200ms ease-in-out,
+    transform 150ms ease-out;
+  will-change: transform;
 }
 
 .button:hover {
+  transform: scale(1.02);
   background-color: var(--clr-accent-hover);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid var(--clr-purple-light);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.button:focus-visible::before {
+  opacity: 1;
 }

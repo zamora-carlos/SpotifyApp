@@ -1,14 +1,27 @@
 import React from 'react';
+import { IoChevronDownSharp } from 'react-icons/io5';
 import styles from './SelectDropdown.module.css';
 
-type SelectDropdownProps = {
+type Option = {
+  label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
-  id: string;
 };
 
-function SelectDropdown({ value, onChange, options, id }: SelectDropdownProps) {
+type SelectDropdownProps = {
+  id: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  className?: string;
+  options: ReadonlyArray<Option>;
+};
+
+function SelectDropdown({
+  value,
+  onChange,
+  options,
+  id,
+  className = '',
+}: SelectDropdownProps) {
   return (
     <div className={styles.selectWrapper}>
       <label htmlFor={id} className="sr-only">
@@ -18,14 +31,15 @@ function SelectDropdown({ value, onChange, options, id }: SelectDropdownProps) {
         id={id}
         value={value}
         onChange={onChange}
-        className={styles.select}
+        className={`${styles.select} ${className}`}
       >
         {options.map(opt => (
-          <option key={opt} value={opt}>
-            {opt}
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
           </option>
         ))}
       </select>
+      <IoChevronDownSharp className={styles.icon} />
     </div>
   );
 }
