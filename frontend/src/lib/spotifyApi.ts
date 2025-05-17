@@ -51,16 +51,23 @@ export async function search(
     token,
   }).toString();
 
-  const data = await apiFetch(`/search?${params}`);
+  type ResponseMap = {
+    artist: { artists: PaginatedResponse<Artist> };
+    track: { tracks: PaginatedResponse<Track> };
+    album: { albums: PaginatedResponse<SimplifiedAlbum> };
+    playlist: { playlists: PaginatedResponse<Playlist> };
+  };
+
+  const data = await apiFetch<ResponseMap[typeof type]>(`/search?${params}`);
 
   switch (type) {
     case 'artist':
-      return { type, data: data as PaginatedResponse<Artist> };
+      return { type, data: (data as ResponseMap['artist']).artists };
     case 'track':
-      return { type, data: data as PaginatedResponse<Track> };
+      return { type, data: (data as ResponseMap['track']).tracks };
     case 'album':
-      return { type, data: data as PaginatedResponse<SimplifiedAlbum> };
+      return { type, data: (data as ResponseMap['album']).albums };
     case 'playlist':
-      return { type, data: data as PaginatedResponse<Playlist> };
+      return { type, data: (data as ResponseMap['playlist']).playlists };
   }
 }
