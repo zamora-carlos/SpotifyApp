@@ -6,6 +6,7 @@ import {
   useState,
   useCallback,
   useMemo,
+  useRef,
 } from 'react';
 import type { ReactNode } from 'react';
 import type { TokenResponse } from 'types/token-response.types';
@@ -28,11 +29,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const refreshPromise = useRef<Promise<string | null> | null>(null);
+
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
     const storedExpiresAt = localStorage.getItem('accessTokenExpiresAt');
-
-    console.log(storedExpiresAt, storedToken);
 
     if (storedToken && storedExpiresAt) {
       setAccessToken(storedToken);
@@ -70,36 +71,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return accessToken;
     }
 
-    if (
-      accessToken &&
-      accessTokenExpiresAt &&
-      Date.now() >= accessTokenExpiresAt - bufferMs
-    ) {
-      try {
-        const data = await refreshToken(accessToken);
-
-        console.log('token refreshed!, previous: ' + accessToken);
-        console.log('new token: ' + data.accessToken);
-
-        login(data);
-        return data.accessToken;
-      } catch (error) {
-        console.error('Error refreshing token:', error);
-        logout();
-        return null;
-      }
+    if (refreshPromise.current) {
+      return refreshPromise.current;
     }
 
-    logout();
-    return null;
+    refreshPromise.current = (async () => {
+      if (
+        accessToken &&
+        accessTokenExpiresAt &&
+        Date.now() >= accessTokenExpiresAt - bufferMs
+      ) {
+        try {
+          const data = await refreshToken(accessToken);
+          login(data);
+          return data.accessToken;
+        } catch (error) {
+          console.error('Error refreshing token:', error);
+          logout();
+          return null;
+        } finally {
+          refreshPromise.current = null;
+        }
+      }
+
+      logout();
+      refreshPromise.current = null;
+      return null;
+    })();
+
+    return refreshPromise.current;
   }, [accessToken, accessTokenExpiresAt, login, logout]);
 
   const isAuthenticated = useMemo(() => {
-    return (
-      accessToken !== null &&
-      accessTokenExpiresAt !== null &&
-      Date.now() < accessTokenExpiresAt
-    );
+    return accessToken !== null && accessTokenExpiresAt !== null;
   }, [accessToken, accessTokenExpiresAt]);
 
   return (
