@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './Button.module.css';
 
 type ButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
-  className: string;
+  className?: string;
   type?: 'button' | 'submit' | 'reset';
 };
 
@@ -18,6 +18,7 @@ function Button({
     <button
       onClick={onClick}
       type={type}
+      tabIndex={0}
       className={`${styles.button} ${className}`}
     >
       {children}
