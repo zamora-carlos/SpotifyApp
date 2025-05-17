@@ -52,8 +52,6 @@ function DashboardPage() {
     fetch();
   }, [getAccessToken, fetchTopArtists]);
 
-  console.log(searchResults);
-
   return (
     <main className="container">
       <h1 className="sr-only">Dashboard</h1>
@@ -123,6 +121,52 @@ function DashboardPage() {
                   link={`/artist/${artist.id}`}
                 />
               ))}
+
+            {searchResults.type === 'album' &&
+              searchResults.data.items.map(album => (
+                <Card
+                  key={album.id}
+                  title={album.name}
+                  subtitle={
+                    album.artists?.map(a => a.name).join(', ') ||
+                    'Various Artists'
+                  }
+                  imageUrl={album.images?.[0]?.url || NotImageAvailable}
+                  alt={`Album ${album.name}`}
+                  link={`/album/${album.id}`}
+                />
+              ))}
+
+            {searchResults.type === 'track' &&
+              searchResults.data.items.map(track => (
+                <Card
+                  key={track.id}
+                  title={track.name}
+                  subtitle={
+                    track.artists?.map(a => a.name).join(', ') ||
+                    'Unknown Artist'
+                  }
+                  imageUrl={track.album?.images?.[0]?.url || NotImageAvailable}
+                  alt={`Track ${track.name}`}
+                  link={`/track/${track.id}`}
+                />
+              ))}
+
+            {searchResults.type === 'playlist' &&
+              searchResults.data.items
+                .filter(playlist => playlist !== null)
+                .map(playlist => (
+                  <Card
+                    key={playlist.id}
+                    title={playlist.name}
+                    subtitle={
+                      playlist.description || `${playlist.tracks.total} tracks`
+                    }
+                    imageUrl={playlist.images?.[0]?.url || NotImageAvailable}
+                    alt={`Playlist ${playlist.name}`}
+                    link={`/playlist/${playlist.id}`}
+                  />
+                ))}
           </div>
         </section>
       )}
