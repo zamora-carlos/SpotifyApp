@@ -12,13 +12,6 @@ function useSpotifyPlayer(token: string | null) {
   const [deviceId, setDeviceId] = useState<string | null>(null);
 
   useEffect(() => {
-    window.addEventListener('unhandledrejection', event => {
-      console.warn('Suppressed unhandled rejection:', event.reason);
-      event.preventDefault();
-    });
-  }, []);
-
-  useEffect(() => {
     if (!token) return;
 
     if (!document.getElementById('spotify-sdk')) {

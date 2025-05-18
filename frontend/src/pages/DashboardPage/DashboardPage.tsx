@@ -14,6 +14,7 @@ import type { Artist } from 'types/artist.types';
 import styles from './DashboardPage.module.css';
 import NotImageAvailable from '@assets/images/no-image-available.png';
 import { useApiRequest } from '@hooks/useApiRequest';
+import PlayerControls from '@components/PlayerControls';
 
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -170,6 +171,8 @@ function DashboardPage() {
           </div>
         </section>
       )}
+
+      <PlayerControls />
     </main>
   );
 }
