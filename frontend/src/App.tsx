@@ -4,6 +4,7 @@ import DashboardPage from '@pages/DashboardPage';
 import ArtistPage from '@pages/ArtistPage';
 import CallbackPage from '@pages/CallbackPage';
 import ProtectedRoute from '@components/ProtectedRoute';
+import TrackPage from '@pages/TrackPage';
 import { AuthProvider } from '@context/AuthContext';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/artist/:id" element={<ArtistPage />} />
+            <Route path="/track/:id" element={<TrackPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
