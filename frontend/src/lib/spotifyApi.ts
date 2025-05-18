@@ -1,6 +1,6 @@
 import apiFetch from './apiClient';
 import type { SearchResponse, SearchType } from 'types/search.types';
-import type { PaginatedResponse } from 'types/paginated-response.types';
+import type { PaginatedResponse } from 'types/paginatedResponse.types';
 import type { Artist } from 'types/artist.types';
 import type { Track } from 'types/track.types';
 import type { Album, SimplifiedAlbum } from 'types/album.types';

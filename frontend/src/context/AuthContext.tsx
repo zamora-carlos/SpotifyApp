@@ -9,7 +9,7 @@ import {
   useRef,
 } from 'react';
 import type { ReactNode } from 'react';
-import type { TokenResponse } from 'types/token-response.types';
+import type { TokenResponse } from 'types/tokenResponse.types';
 
 type AuthContextType = {
   accessToken: string | null;

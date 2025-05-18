@@ -1,4 +1,4 @@
-import type { PaginatedResponse } from './paginated-response.types';
+import type { PaginatedResponse } from './paginatedResponse.types';
 import type { Artist } from './artist.types';
 import type { Track } from './track.types';
 import type { SimplifiedAlbum } from './album.types';

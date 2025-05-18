@@ -1,5 +1,5 @@
 import apiFetch from './apiClient';
-import type { TokenResponse } from 'types/token-response.types';
+import type { TokenResponse } from 'types/tokenResponse.types';
 
 export function exchangeCode(code: string): Promise<TokenResponse> {
   return apiFetch('/auth/token', {

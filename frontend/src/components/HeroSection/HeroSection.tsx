@@ -7,7 +7,7 @@ function HeroSection() {
   const handleLogin = () => {
     const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
     const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
-    const scopes = 'user-read-email user-top-read user-read-private';
+    const scopes = 'user-read-email user-top-read user-read-private streaming';
 
     const params = new URLSearchParams({
       response_type: 'code',
