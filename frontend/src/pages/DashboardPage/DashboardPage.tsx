@@ -12,7 +12,7 @@ import {
 } from '../../types/search.types';
 import type { Artist } from 'types/artist.types';
 import styles from './DashboardPage.module.css';
-import NotImageAvailable from '@assets/images/no-image-available.png';
+import notImageAvailable from '@assets/images/no-image-available.png';
 import { useApiRequest } from '@hooks/useApiRequest';
 
 function DashboardPage() {
@@ -53,7 +53,7 @@ function DashboardPage() {
   }, [getAccessToken, fetchTopArtists]);
 
   return (
-    <main className="container">
+    <main className="container" style={{ marginBottom: '6rem' }}>
       <h1 className="sr-only">Dashboard</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -94,7 +94,7 @@ function DashboardPage() {
                   .slice(0, 3)
                   .join(', ') || '---'
               }
-              imageUrl={artist.images?.[0]?.url || NotImageAvailable}
+              imageUrl={artist.images?.[0]?.url || notImageAvailable}
               link={`/artist/${artist.id}`}
             />
           ))}
@@ -116,7 +116,7 @@ function DashboardPage() {
                       .slice(0, 3)
                       .join(', ') || '---'
                   }
-                  imageUrl={artist.images?.[0]?.url || NotImageAvailable}
+                  imageUrl={artist.images?.[0]?.url || notImageAvailable}
                   alt={`Artist ${artist.name}`}
                   link={`/artist/${artist.id}`}
                 />
@@ -127,11 +127,8 @@ function DashboardPage() {
                 <Card
                   key={album.id}
                   title={album.name}
-                  subtitle={
-                    album.artists?.map(a => a.name).join(', ') ||
-                    'Various Artists'
-                  }
-                  imageUrl={album.images?.[0]?.url || NotImageAvailable}
+                  subtitle={`${new Date(album.release_date).getUTCFullYear()} - ${album.total_tracks} tracks`}
+                  imageUrl={album.images?.[0]?.url || notImageAvailable}
                   alt={`Album ${album.name}`}
                   link={`/album/${album.id}`}
                 />
@@ -146,7 +143,7 @@ function DashboardPage() {
                     track.artists?.map(a => a.name).join(', ') ||
                     'Unknown Artist'
                   }
-                  imageUrl={track.album?.images?.[0]?.url || NotImageAvailable}
+                  imageUrl={track.album?.images?.[0]?.url || notImageAvailable}
                   alt={`Track ${track.name}`}
                   link={`/track/${track.id}`}
                 />
@@ -159,10 +156,8 @@ function DashboardPage() {
                   <Card
                     key={playlist.id}
                     title={playlist.name}
-                    subtitle={
-                      playlist.description || `${playlist.tracks.total} tracks`
-                    }
-                    imageUrl={playlist.images?.[0]?.url || NotImageAvailable}
+                    subtitle={`${playlist.tracks.total} tracks`}
+                    imageUrl={playlist.images?.[0]?.url || notImageAvailable}
                     alt={`Playlist ${playlist.name}`}
                     link={`/playlist/${playlist.id}`}
                   />
