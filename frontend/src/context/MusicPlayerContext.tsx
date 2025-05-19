@@ -47,9 +47,9 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
   const [seeking, setSeeking] = useState(false);
   const [currentTrack, setCurrentTrack] = useState<Spotify.Track | null>(null);
 
-  const { getAccessToken } = useAuth();
   const { player, deviceId, ready } = useSpotifyPlayer(token);
 
+  const { getAccessToken } = useAuth();
   useEffect(() => {
     getAccessToken().then(setToken);
   }, [getAccessToken]);
@@ -116,7 +116,7 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
         console.error('Play failed:', err);
       }
     },
-    [token, deviceId]
+    [token, deviceId, ready]
   );
 
   const togglePlay = async () => {
