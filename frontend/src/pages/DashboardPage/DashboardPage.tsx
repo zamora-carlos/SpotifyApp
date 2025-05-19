@@ -16,6 +16,7 @@ import notImageAvailable from '@assets/images/no-image-available.png';
 import { useApiRequest } from '@hooks/useApiRequest';
 import { MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import PlaylistCard from '@components/PlaylistCard';
 
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -176,14 +177,7 @@ function DashboardPage() {
               searchResults.data.items
                 .filter(playlist => playlist !== null)
                 .map(playlist => (
-                  <Card
-                    key={playlist.id}
-                    title={playlist.name}
-                    subtitle={`${playlist.tracks.total} tracks`}
-                    imageUrl={playlist.images?.[0]?.url || notImageAvailable}
-                    alt={`Playlist ${playlist.name}`}
-                    link={`/playlist/${playlist.id}`}
-                  />
+                  <PlaylistCard key={playlist.id} playlist={playlist} />
                 ))}
           </div>
         </section>
