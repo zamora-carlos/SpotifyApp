@@ -1,0 +1,43 @@
+.progressContainer {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  appearance: none;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background-color: var(--clr-purple);
+  border-radius: 100vw;
+  z-index: 1;
+}
+
+.fill {
+  height: 100%;
+  background-color: var(--clr-purple-light);
+  transition: width 20ms ease;
+  border-radius: 100vw;
+  will-change: width;
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: var(--clr-purple-light);
+  border-radius: 50%;
+  pointer-events: none;
+}

@@ -1,0 +1,32 @@
+.button {
+  border: 2px solid var(--clr-purple);
+  border-radius: 100vw;
+  background: transparent;
+  color: var(--clr-purple-light);
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  outline: none;
+  transition:
+    border-color 200ms ease-in-out,
+    transform 150ms ease-out;
+  will-change: transform;
+}
+
+.button:hover {
+  transform: scale(1.02);
+}
+
+.button:hover,
+.button:focus {
+  border-color: var(--clr-purple-light);
+}
+
+.icon {
+  transform: rotate(90deg);
+  font-size: 1.25rem;
+}

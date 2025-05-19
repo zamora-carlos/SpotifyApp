@@ -1,0 +1,55 @@
+.container {
+  position: relative;
+  background: none;
+  border: none;
+}
+
+button.container {
+  cursor: pointer;
+}
+
+.container[data-tooltip]::after {
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  color: var(--clr-black);
+  transition: opacity 200ms ease-in-out;
+}
+
+.container[data-tooltip]:hover::after,
+.container[data-tooltip]:focus-visible::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: var(--clr-peach);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  opacity: 1;
+  z-index: 10;
+}
+
+.tooltip-bottom::after {
+  bottom: var(--tooltip-distance);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-top::after {
+  top: var(--tooltip-distance);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-left::after {
+  left: var(--tooltip-distance);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tooltip-right::after {
+  right: var(--tooltip-distance);
+  top: 50%;
+  transform: translateY(-50%);
+}

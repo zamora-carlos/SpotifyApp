@@ -1,0 +1,54 @@
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  font-size: 1rem;
+  color: var(--clr-purple-light);
+  padding: 0.75rem 2.5rem;
+  background-color: transparent;
+  border-radius: 100vw;
+  border: 2px solid var(--clr-purple);
+  width: 100%;
+  transition: border-color 200ms ease-in-out;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--clr-purple-medium);
+}
+
+input:focus {
+  border-color: var(--clr-purple-light);
+}
+
+.searchIconContainer,
+.cancelIconContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.searchIconContainer {
+  left: 1rem;
+}
+
+.cancelIconContainer {
+  right: 1rem;
+}
+
+.searchIcon,
+.cancelIcon {
+  font-size: 1.5rem;
+  color: var(--clr-purple);
+}
+
+.searchIcon {
+  pointer-events: none;
+}
+
+.cancelIcon:hover {
+  color: var(--clr-purple-light);
+}

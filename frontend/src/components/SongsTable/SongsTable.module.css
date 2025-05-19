@@ -1,0 +1,144 @@
+.container {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.title {
+  font-size: clamp(1.125rem, 1.4vw + 2.03rem, 2.25rem);
+  color: var(--clr-lavender);
+}
+
+.trackLink {
+  color: var(--clr-purple-light);
+  text-decoration: none;
+}
+
+.trackLink:hover {
+  text-decoration: underline;
+}
+
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--clr-purple-light);
+}
+
+.tableHeader,
+.tableRow {
+  display: grid;
+  grid-template-columns: 2rem 1fr 4rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--clr-purple);
+}
+
+.tableHeader {
+  color: var(--clr-lavender);
+  font-weight: 400;
+}
+
+.tableRow:hover {
+  background-color: var(--clr-table-row-hover);
+}
+
+.icon,
+.image {
+  margin: 0 auto;
+}
+
+.columnIcon {
+  text-align: center;
+}
+
+.image {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.explicit {
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  border: 1px solid var(--clr-purple);
+  border-radius: 2px;
+}
+
+.tableHeader > div,
+.tableRow > div {
+  text-align: center;
+}
+
+.tableHeader > div:nth-child(3),
+.tableRow > div:nth-child(3) {
+  text-align: left;
+}
+
+.tableHeader > div:nth-child(2),
+.tableRow > div:nth-child(2),
+.tableHeader > div:nth-child(4),
+.tableRow > div:nth-child(4) {
+  display: none;
+}
+
+@media (min-width: 25rem) {
+  .tableHeader > div:nth-child(2),
+  .tableRow > div:nth-child(2) {
+    display: block;
+  }
+
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 2rem 5rem 1fr 4rem;
+  }
+}
+
+@media (min-width: 36rem) {
+  .tableHeader > div:nth-child(4),
+  .tableRow > div:nth-child(4) {
+    display: block;
+  }
+
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 3rem 5rem 1fr 6rem 5rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .tableHeader > div:nth-child(4),
+  .tableRow > div:nth-child(4) {
+    display: block;
+  }
+
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 4rem 6rem 1fr 7rem 6rem;
+  }
+}
+
+.playButton {
+  display: none;
+}
+
+.tableRow:hover .playButton {
+  display: unset;
+}
+
+.tableRow:hover .songNumber {
+  display: none;
+}
+
+.playIcon {
+  background-color: #947d97;
+  color: var(--clr-black);
+  border-radius: 50%;
+  padding: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.playIcon:hover {
+  background-color: var(--clr-purple-light);
+}
