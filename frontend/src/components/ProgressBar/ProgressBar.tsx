@@ -19,7 +19,6 @@ function ProgressBar({
   const percent = Math.floor((value / max) * 100);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     onChange(Number(e.target.value));
   };
 

@@ -21,6 +21,13 @@
   font-size: 1.125rem;
   color: var(--clr-lavender);
   padding-top: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card:hover .title {
+  text-decoration: underline;
 }
 
 .subtitle {

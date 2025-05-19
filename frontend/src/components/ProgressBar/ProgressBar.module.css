@@ -25,8 +25,9 @@
 
 .fill {
   height: 100%;
-  background: var(--clr-purple-light);
+  background-color: var(--clr-purple-light);
   transition: width 20ms ease;
+  border-radius: 100vw;
   will-change: width;
 }
 

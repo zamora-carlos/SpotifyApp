@@ -5,8 +5,8 @@
 }
 
 .tag {
-  border: 1px solid white;
-  border-radius: 999px;
+  border: 1px solid var(--clr-purple);
+  border-radius: 100vw;
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
 }

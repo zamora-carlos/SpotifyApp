@@ -12,7 +12,7 @@ button.container {
   content: '';
   opacity: 0;
   pointer-events: none;
-  color: #d4d4d4;
+  color: var(--clr-black);
   transition: opacity 200ms ease-in-out;
 }
 
@@ -20,7 +20,7 @@ button.container {
 .container[data-tooltip]:focus-visible::after {
   content: attr(data-tooltip);
   position: absolute;
-  background-color: #2a2a2a;
+  background-color: var(--clr-peach);
   padding: 0.3rem 0.6rem;
   border-radius: 0.25rem;
   font-family: var(--font-body);
