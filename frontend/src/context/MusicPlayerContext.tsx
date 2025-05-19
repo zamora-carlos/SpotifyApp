@@ -12,7 +12,7 @@ import useSpotifyPlayer from '@hooks/useSpotifyPlayer';
 type RepeatMode = 'off' | 'context' | 'track';
 type PlayBody = { uris: string[] } | { context_uri: string };
 
-type PlayerContextValue = {
+type MusicPlayerContextValue = {
   currentTrack: Spotify.Track | null;
   setUri: (uri: string | string[]) => void;
   shuffle: boolean;
@@ -25,19 +25,23 @@ type PlayerContextValue = {
   seek: (ms: number) => void;
   position: number;
   duration: number;
+  isPaused: boolean;
   setSeeking: (s: boolean) => void;
   volume: number;
   setPlayerVolume: (v: number) => void;
 };
 
-const PlayerContext = createContext<PlayerContextValue | undefined>(undefined);
+const MusicPlayerContext = createContext<MusicPlayerContextValue | undefined>(
+  undefined
+);
 
-export const PlayerProvider = ({ children }: { children: ReactNode }) => {
+export function MusicPlayerProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [uri, setUri] = useState<string | string[]>('');
   const [shuffle, setShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState<RepeatMode>('off');
 
+  const [isPaused, setIsPaused] = useState(true);
   const [volume, setVolume] = useState(1.0);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -59,6 +63,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
       if (!seeking) setPosition(state.position ?? 0);
       setDuration(state.duration ?? 0);
       setCurrentTrack(state.track_window.current_track);
+      setIsPaused(state.paused);
     };
 
     player.addListener('player_state_changed', onStateChange);
@@ -170,7 +175,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <PlayerContext.Provider
+    <MusicPlayerContext.Provider
       value={{
         currentTrack,
         setUri,
@@ -187,15 +192,20 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
         setSeeking,
         volume,
         setPlayerVolume,
+        isPaused,
       }}
     >
       {children}
-    </PlayerContext.Provider>
+    </MusicPlayerContext.Provider>
   );
-};
+}
 
-export function usePlayer() {
-  const context = useContext(PlayerContext);
-  if (!context) throw new Error('usePlayer must be used within PlayerProvider');
+export function useMusicPlayer() {
+  const context = useContext(MusicPlayerContext);
+
+  if (!context) {
+    throw new Error('useMusicPlayer must be used within MusicPlayerProvider');
+  }
+
   return context;
 }
