@@ -38,26 +38,27 @@ export function getAlbumById(id: string, token: string) {
   return apiFetch<Album>(`/album/${id}?token=${token}`);
 }
 
-export async function getTrackById(id: string, token: string) {
+export async function getTrackById(
+  id: string,
+  token: string,
+  withLyrics: boolean = false
+) {
   const track = await apiFetch<Track>(`/track/${id}?token=${token}`);
 
-  const artistName = encodeURIComponent(track.artists[0].name);
-  const trackTitle = encodeURIComponent(track.name);
+  if (!withLyrics) {
+    return { ...track, lyrics: null };
+  }
+
+  const artist = encodeURIComponent(track.artists[0].name);
+  const title = encodeURIComponent(track.name);
 
   try {
     const lyricsResponse = await fetch(
-      `https://api.lyrics.ovh/v1/${artistName}/${trackTitle}`
+      `https://api.lyrics.ovh/v1/${artist}/${title}`
     );
-
-    if (!lyricsResponse.ok) {
-      throw new Error('Lyrics not found');
-    }
-
     const { lyrics } = await lyricsResponse.json();
-
     return { ...track, lyrics };
-  } catch (err) {
-    console.log(err);
+  } catch {
     return { ...track, lyrics: null };
   }
 }
