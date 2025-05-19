@@ -17,7 +17,7 @@
   }
 
   .formRow > * {
-    flex-grow: 1;
+    width: 50%;
   }
 }
 
@@ -32,10 +32,6 @@
 
   .formRow {
     flex: 2;
-  }
-
-  .formRow > * {
-    width: 50%;
   }
 }
 

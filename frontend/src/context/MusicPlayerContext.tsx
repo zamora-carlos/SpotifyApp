@@ -73,6 +73,19 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
     };
   }, [player, seeking]);
 
+  useEffect(() => {
+    if (!player || isPaused || seeking) return;
+
+    const interval = setInterval(async () => {
+      const state = await player.getCurrentState();
+      if (state && !seeking) {
+        setPosition(state.position);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [player, isPaused, seeking]);
+
   const playUri = useCallback(async () => {
     if (!token || !deviceId || !uri) return;
 

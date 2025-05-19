@@ -26,7 +26,6 @@ function ArtistPage() {
     <>
       <div
         style={{
-          backgroundColor: '#4b2b5b',
           minHeight: '100vh',
           padding: '2rem',
         }}
