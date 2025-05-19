@@ -7,6 +7,7 @@ import ProtectedRoute from '@components/ProtectedRoute';
 import TrackPage from '@pages/TrackPage';
 import { AuthProvider } from '@context/AuthContext';
 import { MusicPlayerProvider } from '@context/MusicPlayerContext';
+import AlbumPage from '@pages/AlbumPage';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/artist/:id" element={<ArtistPage />} />
+              <Route path="/album/:id" element={<AlbumPage />} />
               <Route path="/track/:id" element={<TrackPage />} />
             </Route>
           </Routes>

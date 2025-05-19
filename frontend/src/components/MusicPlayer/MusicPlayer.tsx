@@ -124,7 +124,10 @@ function MusicPlayer() {
 
         <div className={styles.volumeContainer}>
           <div className={styles.volumeController}>
-            <button className={styles.icon}>
+            <button
+              className={styles.icon}
+              onClick={() => setPlayerVolume(volume === 0 ? 0.5 : 0)}
+            >
               {volume === 0 ? <RiVolumeMuteFill /> : <RiVolumeUpFill />}
             </button>
             <div className={styles.volumeBar}>

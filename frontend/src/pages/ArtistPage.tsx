@@ -18,10 +18,13 @@ import Card from '@components/Card';
 import notImageAvailable from '@assets/images/no-image-available.png';
 import type { SimplifiedAlbum } from 'types/album.types';
 import type { PaginatedResponse } from 'types/paginatedResponse.types';
+import { MdLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 function ArtistPage() {
   const { id } = useParams();
-  const { getAccessToken } = useAuth();
+  const navigate = useNavigate();
+  const { getAccessToken, logout } = useAuth();
 
   const {
     data: artistData,
@@ -66,8 +69,29 @@ function ArtistPage() {
   return (
     <>
       <section className="container" style={{ marginBottom: '6rem' }}>
-        <div style={{ marginTop: '2rem' }}>
+        <div
+          style={{
+            marginTop: '2rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
           <GoBackButton />
+
+          <div className="logoutContainer">
+            <button
+              className="logout"
+              onClick={() => {
+                logout();
+                navigate('/login');
+              }}
+            >
+              Logout
+              <MdLogout />
+            </button>
+          </div>
         </div>
         {artistRequestStatus === 'loading' ? (
           <Spinner />

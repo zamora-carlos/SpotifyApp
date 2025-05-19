@@ -33,6 +33,7 @@ export default function Tooltip({
       aria-label={ariaLabel || tooltip}
       onClick={onClick}
       style={customStyle}
+      type="reset"
     >
       {children}
     </Component>
