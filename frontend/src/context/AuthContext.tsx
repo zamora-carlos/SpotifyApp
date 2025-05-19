@@ -1,20 +1,10 @@
 import { refreshToken } from '@lib/authApi';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-} from 'react';
+import { createContext, useContext, useCallback, useRef } from 'react';
 import type { ReactNode } from 'react';
 import type { TokenResponse } from 'types/tokenResponse.types';
 
 type AuthContextType = {
-  accessToken: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
+  isAuthenticated: () => boolean;
   login: (tokenResponse: TokenResponse) => void;
   logout: () => void;
   getAccessToken: () => Promise<string | null>;
@@ -23,39 +13,15 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [accessTokenExpiresAt, setAccessTokenExpiresAt] = useState<
-    number | null
-  >(null);
-  const [isLoading, setIsLoading] = useState(true);
-
   const refreshPromise = useRef<Promise<string | null> | null>(null);
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('accessToken');
-    const storedExpiresAt = localStorage.getItem('accessTokenExpiresAt');
-
-    if (storedToken && storedExpiresAt) {
-      setAccessToken(storedToken);
-      setAccessTokenExpiresAt(Number(storedExpiresAt));
-    }
-
-    setIsLoading(false);
-  }, []);
 
   const login = useCallback((tokenResponse: TokenResponse) => {
     const expiresAt = new Date(tokenResponse.expiresAt).getTime();
-
-    setAccessToken(tokenResponse.accessToken);
-    setAccessTokenExpiresAt(expiresAt);
-
     localStorage.setItem('accessToken', tokenResponse.accessToken);
     localStorage.setItem('accessTokenExpiresAt', expiresAt.toString());
   }, []);
 
   const logout = useCallback(() => {
-    setAccessToken(null);
-    setAccessTokenExpiresAt(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('accessTokenExpiresAt');
   }, []);
@@ -63,26 +29,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const getAccessToken = useCallback(async (): Promise<string | null> => {
     const bufferMs = 10_000;
 
-    if (
-      accessToken &&
-      accessTokenExpiresAt &&
-      Date.now() < accessTokenExpiresAt - bufferMs
-    ) {
-      return accessToken;
+    const storedToken = localStorage.getItem('accessToken');
+    const storedExpiresAt = localStorage.getItem('accessTokenExpiresAt');
+    const expiresAt = storedExpiresAt ? Number(storedExpiresAt) : null;
+
+    if (storedToken && expiresAt && Date.now() < expiresAt - bufferMs) {
+      return storedToken;
     }
 
     if (refreshPromise.current) {
       return refreshPromise.current;
     }
 
-    refreshPromise.current = (async () => {
-      if (
-        accessToken &&
-        accessTokenExpiresAt &&
-        Date.now() >= accessTokenExpiresAt - bufferMs
-      ) {
+    if (storedToken && expiresAt) {
+      refreshPromise.current = (async () => {
         try {
-          const data = await refreshToken(accessToken);
+          const data = await refreshToken(storedToken);
           login(data);
           return data.accessToken;
         } catch (error) {
@@ -92,26 +54,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } finally {
           refreshPromise.current = null;
         }
-      }
+      })();
 
-      logout();
-      refreshPromise.current = null;
-      return null;
-    })();
+      return refreshPromise.current;
+    }
 
-    return refreshPromise.current;
-  }, [accessToken, accessTokenExpiresAt, login, logout]);
+    logout();
+    return null;
+  }, [login, logout]);
 
-  const isAuthenticated = useMemo(() => {
-    return accessToken !== null && accessTokenExpiresAt !== null;
-  }, [accessToken, accessTokenExpiresAt]);
+  const isAuthenticated = useCallback(() => {
+    const token = localStorage.getItem('accessToken');
+    const expiresAt = localStorage.getItem('accessTokenExpiresAt');
+    return (
+      token !== null && expiresAt !== null && Date.now() < Number(expiresAt)
+    );
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        accessToken,
         isAuthenticated,
-        isLoading,
         login,
         logout,
         getAccessToken,
@@ -124,10 +87,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-
   return context;
 }
