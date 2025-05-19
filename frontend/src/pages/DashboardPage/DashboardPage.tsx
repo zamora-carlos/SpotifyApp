@@ -14,12 +14,15 @@ import type { Artist } from 'types/artist.types';
 import styles from './DashboardPage.module.css';
 import notImageAvailable from '@assets/images/no-image-available.png';
 import { useApiRequest } from '@hooks/useApiRequest';
+import { MdLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState<SearchType>('artist');
+  const navigate = useNavigate();
 
-  const { getAccessToken } = useAuth();
+  const { getAccessToken, logout } = useAuth();
 
   const {
     data: topArtistsData,
@@ -54,6 +57,26 @@ function DashboardPage() {
 
   return (
     <main className="container" style={{ marginBottom: '6rem' }}>
+      <div
+        className="logoutContainer"
+        style={{
+          display: 'flex',
+          marginTop: '2rem',
+          justifyContent: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <button
+          className="logout"
+          onClick={() => {
+            logout();
+            navigate('/login');
+          }}
+        >
+          Logout
+          <MdLogout />
+        </button>
+      </div>
       <h1 className="sr-only">Dashboard</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
