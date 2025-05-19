@@ -127,7 +127,11 @@ function DashboardPage() {
 
       {searchResults && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Search results —</h2>
+          <h2 className={styles.sectionTitle}>
+            {searchResults.data.items.length > 0
+              ? 'Search results —'
+              : 'No search results -'}
+          </h2>
           <div className={styles.grid}>
             {searchResults.type === 'artist' &&
               searchResults.data.items.map(artist => (

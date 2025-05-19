@@ -8,6 +8,7 @@ import TrackPage from '@pages/TrackPage';
 import { AuthProvider } from '@context/AuthContext';
 import { MusicPlayerProvider } from '@context/MusicPlayerContext';
 import AlbumPage from '@pages/AlbumPage';
+import MusicPlayer from '@components/MusicPlayer';
 
 export default function App() {
   return (
@@ -18,7 +19,14 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/callback" element={<CallbackPage />} />
 
-            <Route element={<ProtectedRoute />}>
+            <Route
+              element={
+                <>
+                  <ProtectedRoute />
+                  <MusicPlayer />
+                </>
+              }
+            >
               <Route path="/" element={<DashboardPage />} />
               <Route path="/artist/:id" element={<ArtistPage />} />
               <Route path="/album/:id" element={<AlbumPage />} />

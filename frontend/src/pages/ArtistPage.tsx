@@ -1,7 +1,6 @@
 import GoBackButton from '@components/GoBackButton';
 import ArtistHeader from '@components/ArtistHeader';
 import SongsTable from '@components/SongsTable';
-import MusicPlayer from '@components/MusicPlayer';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '@context/AuthContext';
 import type { Artist } from 'types/artist.types';
@@ -67,75 +66,71 @@ function ArtistPage() {
   ]);
 
   return (
-    <>
-      <section className="container" style={{ marginBottom: '6rem' }}>
-        <div
-          style={{
-            marginTop: '2rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <GoBackButton />
+    <section className="container" style={{ marginBottom: '6rem' }}>
+      <div
+        style={{
+          marginTop: '2rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <GoBackButton />
 
-          <div className="logoutContainer">
-            <button
-              className="logout"
-              onClick={() => {
-                logout();
-                navigate('/login');
-              }}
-            >
-              Logout
-              <MdLogout />
-            </button>
-          </div>
+        <div className="logoutContainer">
+          <button
+            className="logout"
+            onClick={() => {
+              logout();
+              navigate('/login');
+            }}
+          >
+            Logout
+            <MdLogout />
+          </button>
         </div>
-        {artistRequestStatus === 'loading' ? (
-          <Spinner />
-        ) : artistData !== null ? (
-          <ArtistHeader artist={artistData} />
-        ) : (
-          <p>Error while fetching artist data</p>
-        )}
+      </div>
+      {artistRequestStatus === 'loading' ? (
+        <Spinner />
+      ) : artistData !== null ? (
+        <ArtistHeader artist={artistData} />
+      ) : (
+        <p>Error while fetching artist data</p>
+      )}
 
-        {artistTracksRequestStatus === 'loading' ? (
-          <Spinner />
-        ) : artistTracksData !== null ? (
-          <SongsTable songs={artistTracksData.tracks} />
-        ) : (
-          <p>Error while fetching artist's top tracks</p>
-        )}
+      {artistTracksRequestStatus === 'loading' ? (
+        <Spinner />
+      ) : artistTracksData !== null ? (
+        <SongsTable songs={artistTracksData.tracks} />
+      ) : (
+        <p>Error while fetching artist's top tracks</p>
+      )}
 
-        {artistsAlbumsRequestStatus === 'loading' ? (
-          <Spinner />
-        ) : artistAlbumsData !== null ? (
-          <>
-            <h2 className="h2Title" style={{ marginTop: '3rem' }}>
-              Albums
-            </h2>
-            <div className="grid">
-              {artistAlbumsData.items.map(album => (
-                <Card
-                  key={album.id}
-                  title={album.name}
-                  subtitle={`${new Date(album.release_date).getUTCFullYear()} - ${album.total_tracks} tracks`}
-                  imageUrl={album.images?.[0]?.url || notImageAvailable}
-                  alt={`Album ${album.name}`}
-                  link={`/album/${album.id}`}
-                />
-              ))}
-            </div>
-          </>
-        ) : (
-          <p>Error while fetching artist's albums</p>
-        )}
-      </section>
-
-      <MusicPlayer />
-    </>
+      {artistsAlbumsRequestStatus === 'loading' ? (
+        <Spinner />
+      ) : artistAlbumsData !== null ? (
+        <>
+          <h2 className="h2Title" style={{ marginTop: '3rem' }}>
+            Albums
+          </h2>
+          <div className="grid">
+            {artistAlbumsData.items.map(album => (
+              <Card
+                key={album.id}
+                title={album.name}
+                subtitle={`${new Date(album.release_date).getUTCFullYear()} - ${album.total_tracks} tracks`}
+                imageUrl={album.images?.[0]?.url || notImageAvailable}
+                alt={`Album ${album.name}`}
+                link={`/album/${album.id}`}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p>Error while fetching artist's albums</p>
+      )}
+    </section>
   );
 }
 

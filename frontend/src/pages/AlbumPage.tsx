@@ -1,5 +1,4 @@
 import GoBackButton from '@components/GoBackButton';
-import MusicPlayer from '@components/MusicPlayer';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '@context/AuthContext';
 import { useApiRequest } from '@hooks/useApiRequest';
@@ -38,46 +37,42 @@ function AlbumPage() {
   }, [fetchAlbumData, getAccessToken, id]);
 
   return (
-    <>
-      <section className="container" style={{ marginBottom: '6rem' }}>
-        <div
-          style={{
-            marginTop: '2rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <GoBackButton />
+    <section className="container" style={{ marginBottom: '6rem' }}>
+      <div
+        style={{
+          marginTop: '2rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <GoBackButton />
 
-          <div className="logoutContainer">
-            <button
-              className="logout"
-              onClick={() => {
-                logout();
-                navigate('/login');
-              }}
-            >
-              Logout
-              <MdLogout />
-            </button>
-          </div>
+        <div className="logoutContainer">
+          <button
+            className="logout"
+            onClick={() => {
+              logout();
+              navigate('/login');
+            }}
+          >
+            Logout
+            <MdLogout />
+          </button>
         </div>
-        {albumRequestStatus === 'loading' ? (
-          <Spinner />
-        ) : albumData !== null ? (
-          <>
-            <AlbumHeader album={albumData} />
-            <AlbumTracks tracks={albumData.tracks.items} />
-          </>
-        ) : (
-          <p>Error while fetching album data</p>
-        )}
-      </section>
-
-      <MusicPlayer />
-    </>
+      </div>
+      {albumRequestStatus === 'loading' ? (
+        <Spinner />
+      ) : albumData !== null ? (
+        <>
+          <AlbumHeader album={albumData} />
+          <AlbumTracks tracks={albumData.tracks.items} />
+        </>
+      ) : (
+        <p>Error while fetching album data</p>
+      )}
+    </section>
   );
 }
 
