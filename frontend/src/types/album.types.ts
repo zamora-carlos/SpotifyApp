@@ -1,6 +1,6 @@
 import type { SimplifiedArtist } from './artist.types';
 import type { Image } from './image.types';
-import type { PaginatedResponse } from './paginated-response.types';
+import type { PaginatedResponse } from './paginatedResponse.types';
 import type { SimplifiedTrack } from './track.types';
 
 export type AlbumType = 'album' | 'single' | 'compilation';

@@ -60,6 +60,11 @@ public class SpotifyService {
         return callSpotifyApi(url, token);
     }
 
+    public Map getTrackById(String id, String token) {
+        String url = spotifyConfig.getApiUrl() + "tracks/" + id;
+        return callSpotifyApi(url, token);
+    }
+
     public Map search(String query, String type, String token, int page) {
         int limit = 20;
         int offset = (page - 1) * limit;
@@ -72,6 +77,7 @@ public class SpotifyService {
                 .queryParam("type", type)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset)
+                .queryParam("market", "from_token")
                 .build()
                 .toUri();
 

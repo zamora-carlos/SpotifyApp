@@ -20,21 +20,29 @@ input:focus {
   border-color: var(--clr-purple-light);
 }
 
+.searchIconContainer,
+.cancelIconContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.searchIconContainer {
+  left: 1rem;
+}
+
+.cancelIconContainer {
+  right: 1rem;
+}
+
 .searchIcon,
 .cancelIcon {
-  position: absolute;
   font-size: 1.5rem;
   color: var(--clr-purple);
 }
 
 .searchIcon {
-  left: 1rem;
   pointer-events: none;
-}
-
-.cancelIcon {
-  right: 1rem;
-  cursor: pointer;
 }
 
 .cancelIcon:hover {

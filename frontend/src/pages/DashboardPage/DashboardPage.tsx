@@ -56,12 +56,12 @@ function DashboardPage() {
     <main className="container">
       <h1 className="sr-only">Dashboard</h1>
 
-      {/* Search Form */}
       <form className={styles.form} onSubmit={handleSubmit}>
         <SearchInput
           id="search"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
+          onCancel={() => setSearchTerm('')}
           placeholder="What are you looking for?"
         />
         <div className={styles.formRow}>

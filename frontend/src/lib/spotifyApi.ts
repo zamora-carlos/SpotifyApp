@@ -1,6 +1,6 @@
 import apiFetch from './apiClient';
 import type { SearchResponse, SearchType } from 'types/search.types';
-import type { PaginatedResponse } from 'types/paginated-response.types';
+import type { PaginatedResponse } from 'types/paginatedResponse.types';
 import type { Artist } from 'types/artist.types';
 import type { Track } from 'types/track.types';
 import type { Album, SimplifiedAlbum } from 'types/album.types';
@@ -36,6 +36,31 @@ export function getRelatedArtists(id: string, token: string) {
 
 export function getAlbumById(id: string, token: string) {
   return apiFetch<Album>(`/album/${id}?token=${token}`);
+}
+
+export async function getTrackById(
+  id: string,
+  token: string,
+  withLyrics: boolean = false
+) {
+  const track = await apiFetch<Track>(`/track/${id}?token=${token}`);
+
+  if (!withLyrics) {
+    return { ...track, lyrics: null };
+  }
+
+  const artist = encodeURIComponent(track.artists[0].name);
+  const title = encodeURIComponent(track.name);
+
+  try {
+    const lyricsResponse = await fetch(
+      `https://api.lyrics.ovh/v1/${artist}/${title}`
+    );
+    const { lyrics } = await lyricsResponse.json();
+    return { ...track, lyrics };
+  } catch {
+    return { ...track, lyrics: null };
+  }
 }
 
 export async function search(

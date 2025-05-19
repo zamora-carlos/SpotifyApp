@@ -66,6 +66,14 @@ public class SpotifyController {
         return ResponseEntity.ok(spotifyService.getAlbumById(id, token));
     }
 
+    @GetMapping("/track/{id}")
+    public ResponseEntity<Map<String, Object>> getTrackById(
+            @PathVariable String id,
+            @RequestParam String token
+    ) {
+        return ResponseEntity.ok(spotifyService.getTrackById(id, token));
+    }
+
     @GetMapping("/search")
     public ResponseEntity<Map<String, Object>> search(
             @RequestParam String query,
