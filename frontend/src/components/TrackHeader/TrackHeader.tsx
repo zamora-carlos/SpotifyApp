@@ -37,6 +37,7 @@ function TrackHeader({ track }: TrackHeaderProps) {
       </div>
 
       <div className={styles.details}>
+        {track?.artists.length > 0 && <span>{track.artists[0].name}</span>}
         <h1 className={styles.name}>{track.name}</h1>
         <div className={styles.info}>
           <div>

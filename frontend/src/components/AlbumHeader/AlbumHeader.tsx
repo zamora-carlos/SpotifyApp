@@ -36,6 +36,7 @@ function AlbumHeader({ album }: AlbumHeaderProps) {
       </div>
 
       <div className={styles.details}>
+        {album?.artists.length > 0 && <span>{album.artists[0].name}</span>}
         <h1 className={styles.name}>{album.name}</h1>
         <div className={styles.info}>
           <div>
