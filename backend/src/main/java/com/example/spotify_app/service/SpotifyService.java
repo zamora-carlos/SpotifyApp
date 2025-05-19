@@ -65,8 +65,24 @@ public class SpotifyService {
         return callSpotifyApi(url, token);
     }
 
+    public Map getArtistAlbums(String id, String token, int page) {
+        int limit = 10;
+        int offset = (page - 1) * limit;
+
+        URI uri = UriComponentsBuilder
+                .fromUri(URI.create(spotifyConfig.getApiUrl() + "artists/" + id + "/albums"))
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("include_groups", "album,single") // Optional: filter types of releases
+                .queryParam("market", "from_token")
+                .build()
+                .toUri();
+
+        return callSpotifyApi(uri.toString(), token);
+    }
+
     public Map search(String query, String type, String token, int page) {
-        int limit = 20;
+        int limit = 10;
         int offset = (page - 1) * limit;
 
         String baseUrl = spotifyConfig.getApiUrl() + "search";
