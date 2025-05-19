@@ -14,17 +14,24 @@
 
 .image {
   width: 100%;
-  margin: 0 auto;
-  max-width: 30rem;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  max-width: 30rem;
   border-radius: 1rem;
+  overflow: hidden;
 }
 
 .info {
   display: flex;
   gap: 2rem;
   font-size: 1rem;
+  margin-top: 2rem;
 }
 
 .info h2 {
@@ -45,9 +52,35 @@
     justify-content: flex-start;
   }
 
-  .image {
+  .imageContainer {
     width: 40%;
     max-width: 20rem;
     margin: unset;
   }
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.tooltipContainer {
+  position: absolute;
+}
+
+.tooltipContainer {
+  left: 0.875rem;
+  bottom: 0.125rem;
+}
+
+.playIcon {
+  background-color: var(--clr-accent);
+  color: var(--clr-black);
+  border-radius: 50%;
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 3rem;
+}
+
+.playIcon:hover {
+  background-color: var(--clr-accent-hover);
 }

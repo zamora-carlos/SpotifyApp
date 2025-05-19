@@ -10,9 +10,13 @@
   transform: scale(1.05);
 }
 
-.image {
+.imageContainer {
   display: block;
   width: 100%;
+}
+
+.image {
+  width: '100%';
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
@@ -26,12 +30,34 @@
   text-overflow: ellipsis;
 }
 
-.card:hover .title {
-  text-decoration: underline;
-}
-
 .subtitle {
   font-size: 0.9375rem;
   color: var(--clr-purple-light);
   margin-top: 0.25rem;
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.tooltipContainer {
+  position: absolute;
+}
+
+.tooltipContainer {
+  left: 0.875rem;
+  bottom: 0.125rem;
+}
+
+.playIcon {
+  background-color: var(--clr-accent);
+  color: var(--clr-black);
+  border-radius: 50%;
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 3rem;
+}
+
+.playIcon:hover {
+  background-color: var(--clr-accent-hover);
 }

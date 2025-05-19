@@ -38,6 +38,12 @@ export function getAlbumById(id: string, token: string) {
   return apiFetch<Album>(`/album/${id}?token=${token}`);
 }
 
+export function getArtistAlbums(id: string, token: string, page: number) {
+  return apiFetch<PaginatedResponse<SimplifiedAlbum>>(
+    `/artist/${id}/albums?token=${token}&page=${page}`
+  );
+}
+
 export async function getTrackById(
   id: string,
   token: string,

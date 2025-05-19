@@ -3,7 +3,11 @@ import HeroDoodle from '@components/HeroDoodle';
 import heroImg from '@assets/images/hero-img.png';
 import styles from './HeroSection.module.css';
 
-function HeroSection() {
+type HeroSectionProps = {
+  authError: string;
+};
+
+function HeroSection({ authError }: HeroSectionProps) {
   const handleLogin = () => {
     const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
     const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
@@ -41,6 +45,8 @@ function HeroSection() {
           <Button onClick={handleLogin} className={styles.button}>
             Login
           </Button>
+
+          {authError && <p className={styles.text}>{authError}</p>}
         </div>
 
         <div className={styles.imageContainer} aria-hidden="true">

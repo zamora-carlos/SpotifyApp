@@ -16,6 +16,10 @@
   outline: none;
 }
 
+.input::placeholder {
+  color: var(--clr-purple-medium);
+}
+
 input:focus {
   border-color: var(--clr-purple-light);
 }

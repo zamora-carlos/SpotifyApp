@@ -58,6 +58,15 @@ public class SpotifyController {
         return ResponseEntity.ok(spotifyService.getRelatedArtists(id, token));
     }
 
+    @GetMapping("/artist/{id}/albums")
+    public ResponseEntity<Map<String, Object>> getArtistAlbums(
+            @PathVariable String id,
+            @RequestParam String token,
+            @RequestParam int page
+    ) {
+        return ResponseEntity.ok(spotifyService.getArtistAlbums(id, token, page));
+    }
+
     @GetMapping("/album/{id}")
     public ResponseEntity<Map<String, Object>> getAlbumById(
             @PathVariable String id,

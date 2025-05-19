@@ -12,6 +12,13 @@ function useSpotifyAuth() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const code = queryParams.get('code');
+    const error = queryParams.get('error');
+
+    if (error) {
+      console.error('Spotify authorization error:', error);
+      navigate('/login?authError=access_denied', { replace: true });
+      return;
+    }
 
     if (!code || calledRef.current) return;
     calledRef.current = true;
@@ -23,7 +30,7 @@ function useSpotifyAuth() {
         navigate('/', { replace: true });
       } catch (error) {
         console.error('Spotify auth failed:', error);
-        navigate('/login', { replace: true });
+        navigate('/login?authError=token_exchange_failed', { replace: true });
       }
     };
 

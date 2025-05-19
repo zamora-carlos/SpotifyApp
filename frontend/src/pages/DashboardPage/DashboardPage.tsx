@@ -12,14 +12,18 @@ import {
 } from '../../types/search.types';
 import type { Artist } from 'types/artist.types';
 import styles from './DashboardPage.module.css';
-import NotImageAvailable from '@assets/images/no-image-available.png';
+import notImageAvailable from '@assets/images/no-image-available.png';
 import { useApiRequest } from '@hooks/useApiRequest';
+import { MdLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import PlaylistCard from '@components/PlaylistCard';
 
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState<SearchType>('artist');
+  const navigate = useNavigate();
 
-  const { getAccessToken } = useAuth();
+  const { getAccessToken, logout } = useAuth();
 
   const {
     data: topArtistsData,
@@ -53,7 +57,27 @@ function DashboardPage() {
   }, [getAccessToken, fetchTopArtists]);
 
   return (
-    <main className="container">
+    <main className="container" style={{ marginBottom: '6rem' }}>
+      <div
+        className="logoutContainer"
+        style={{
+          display: 'flex',
+          marginTop: '2rem',
+          justifyContent: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <button
+          className="logout"
+          onClick={() => {
+            logout();
+            navigate('/login');
+          }}
+        >
+          Logout
+          <MdLogout />
+        </button>
+      </div>
       <h1 className="sr-only">Dashboard</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -94,7 +118,7 @@ function DashboardPage() {
                   .slice(0, 3)
                   .join(', ') || '---'
               }
-              imageUrl={artist.images?.[0]?.url || NotImageAvailable}
+              imageUrl={artist.images?.[0]?.url || notImageAvailable}
               link={`/artist/${artist.id}`}
             />
           ))}
@@ -103,7 +127,11 @@ function DashboardPage() {
 
       {searchResults && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Search results —</h2>
+          <h2 className={styles.sectionTitle}>
+            {searchResults.data.items.length > 0
+              ? 'Search results —'
+              : 'No search results -'}
+          </h2>
           <div className={styles.grid}>
             {searchResults.type === 'artist' &&
               searchResults.data.items.map(artist => (
@@ -116,7 +144,7 @@ function DashboardPage() {
                       .slice(0, 3)
                       .join(', ') || '---'
                   }
-                  imageUrl={artist.images?.[0]?.url || NotImageAvailable}
+                  imageUrl={artist.images?.[0]?.url || notImageAvailable}
                   alt={`Artist ${artist.name}`}
                   link={`/artist/${artist.id}`}
                 />
@@ -127,11 +155,8 @@ function DashboardPage() {
                 <Card
                   key={album.id}
                   title={album.name}
-                  subtitle={
-                    album.artists?.map(a => a.name).join(', ') ||
-                    'Various Artists'
-                  }
-                  imageUrl={album.images?.[0]?.url || NotImageAvailable}
+                  subtitle={`${new Date(album.release_date).getUTCFullYear()} - ${album.total_tracks} tracks`}
+                  imageUrl={album.images?.[0]?.url || notImageAvailable}
                   alt={`Album ${album.name}`}
                   link={`/album/${album.id}`}
                 />
@@ -146,7 +171,7 @@ function DashboardPage() {
                     track.artists?.map(a => a.name).join(', ') ||
                     'Unknown Artist'
                   }
-                  imageUrl={track.album?.images?.[0]?.url || NotImageAvailable}
+                  imageUrl={track.album?.images?.[0]?.url || notImageAvailable}
                   alt={`Track ${track.name}`}
                   link={`/track/${track.id}`}
                 />
@@ -156,16 +181,7 @@ function DashboardPage() {
               searchResults.data.items
                 .filter(playlist => playlist !== null)
                 .map(playlist => (
-                  <Card
-                    key={playlist.id}
-                    title={playlist.name}
-                    subtitle={
-                      playlist.description || `${playlist.tracks.total} tracks`
-                    }
-                    imageUrl={playlist.images?.[0]?.url || NotImageAvailable}
-                    alt={`Playlist ${playlist.name}`}
-                    link={`/playlist/${playlist.id}`}
-                  />
+                  <PlaylistCard key={playlist.id} playlist={playlist} />
                 ))}
           </div>
         </section>
