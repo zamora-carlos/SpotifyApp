@@ -14,7 +14,6 @@ type PlayBody = { uris: string[] } | { context_uri: string };
 
 type MusicPlayerContextValue = {
   currentTrack: Spotify.Track | null;
-  setUri: (uri: string | string[]) => void;
   shuffle: boolean;
   repeatMode: RepeatMode;
   togglePlay: () => void;
@@ -26,6 +25,7 @@ type MusicPlayerContextValue = {
   position: number;
   duration: number;
   isPaused: boolean;
+  play: (newUri: string | string[]) => void;
   setSeeking: (s: boolean) => void;
   volume: number;
   setPlayerVolume: (v: number) => void;
@@ -37,7 +37,6 @@ const MusicPlayerContext = createContext<MusicPlayerContextValue | undefined>(
 
 export function MusicPlayerProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
-  const [uri, setUri] = useState<string | string[]>('');
   const [shuffle, setShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState<RepeatMode>('off');
 
@@ -49,7 +48,7 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
   const [currentTrack, setCurrentTrack] = useState<Spotify.Track | null>(null);
 
   const { getAccessToken } = useAuth();
-  const { player, deviceId } = useSpotifyPlayer(token);
+  const { player, deviceId, ready } = useSpotifyPlayer(token);
 
   useEffect(() => {
     getAccessToken().then(setToken);
@@ -86,40 +85,39 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval);
   }, [player, isPaused, seeking]);
 
-  const playUri = useCallback(async () => {
-    if (!token || !deviceId || !uri) return;
+  const playUri = useCallback(
+    async (inputUri: string | string[]) => {
+      if (!token || !deviceId || !inputUri || !ready) return;
 
-    let body: PlayBody;
+      let body: PlayBody;
 
-    if (typeof uri === 'string') {
-      const isTrack = uri.startsWith('spotify:track:');
-      body = isTrack ? { uris: [uri] } : { context_uri: uri };
-    } else if (Array.isArray(uri) && uri.length > 0) {
-      body = { uris: uri };
-    } else {
-      return;
-    }
+      if (typeof inputUri === 'string') {
+        const isTrack = inputUri.startsWith('spotify:track:');
+        body = isTrack ? { uris: [inputUri] } : { context_uri: inputUri };
+      } else if (Array.isArray(inputUri) && inputUri.length > 0) {
+        body = { uris: inputUri };
+      } else {
+        return;
+      }
 
-    try {
-      await fetch(
-        `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        }
-      );
-    } catch (err) {
-      console.error('Play failed:', err);
-    }
-  }, [token, deviceId, uri]);
-
-  useEffect(() => {
-    if (uri) playUri();
-  }, [uri, playUri]);
+      try {
+        await fetch(
+          `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+          {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+          }
+        );
+      } catch (err) {
+        console.error('Play failed:', err);
+      }
+    },
+    [token, deviceId]
+  );
 
   const togglePlay = async () => {
     if (!player) return;
@@ -166,14 +164,17 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const play = (newUri: string | string[]) => {
+    if (!ready) return;
+    playUri(newUri);
+  };
+
   const skipNext = async () => {
     await player?.nextTrack();
-    playUri();
   };
 
   const skipPrev = async () => {
     await player?.previousTrack();
-    playUri();
   };
 
   const seek = async (ms: number) => {
@@ -191,10 +192,10 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
     <MusicPlayerContext.Provider
       value={{
         currentTrack,
-        setUri,
         shuffle,
         repeatMode,
         togglePlay,
+        play,
         toggleShuffle,
         toggleRepeat,
         skipNext,
