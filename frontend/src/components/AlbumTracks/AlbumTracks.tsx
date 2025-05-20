@@ -13,7 +13,7 @@ type AlbumTracksProps = {
 };
 
 function AlbumTracks({ tracks }: AlbumTracksProps) {
-  const { setUri } = useMusicPlayer();
+  const { play } = useMusicPlayer();
 
   return (
     <div className={styles.container}>
@@ -39,7 +39,7 @@ function AlbumTracks({ tracks }: AlbumTracksProps) {
                   <Tooltip
                     tooltip="Play"
                     aria-label="Play"
-                    onClick={() => setUri(`spotify:track:${song.id}`)}
+                    onClick={() => play(`spotify:track:${song.id}`)}
                   >
                     <div className={styles.playIcon}>
                       <IoPlay />

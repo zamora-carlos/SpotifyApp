@@ -14,7 +14,7 @@ type SongsTableProps = {
 };
 
 function SongsTable({ songs }: SongsTableProps) {
-  const { setUri } = useMusicPlayer();
+  const { play } = useMusicPlayer();
 
   return (
     <div className={styles.container}>
@@ -42,7 +42,7 @@ function SongsTable({ songs }: SongsTableProps) {
                   <Tooltip
                     tooltip="Play"
                     aria-label="Play"
-                    onClick={() => setUri(`spotify:track:${song.id}`)}
+                    onClick={() => play(`spotify:track:${song.id}`)}
                   >
                     <div className={styles.playIcon}>
                       <IoPlay />
