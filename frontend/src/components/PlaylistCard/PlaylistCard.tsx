@@ -10,7 +10,7 @@ type PlaylistCardProps = {
 };
 
 function PlaylistCard({ playlist }: PlaylistCardProps) {
-  const { setUri } = useMusicPlayer();
+  const { play } = useMusicPlayer();
 
   return (
     <div className={styles.card}>
@@ -25,7 +25,7 @@ function PlaylistCard({ playlist }: PlaylistCardProps) {
           <Tooltip
             tooltip="Play playlist"
             aria-label="Play playlist"
-            onClick={() => setUri(`spotify:playlist:${playlist.id}`)}
+            onClick={() => play(`spotify:playlist:${playlist.id}`)}
             distance="90%"
           >
             <div className={styles.playIcon}>

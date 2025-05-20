@@ -11,7 +11,7 @@ type TrackHeaderProps = {
 };
 
 function TrackHeader({ track }: TrackHeaderProps) {
-  const { setUri } = useMusicPlayer();
+  const { play } = useMusicPlayer();
 
   return (
     <section className={styles.container}>
@@ -26,7 +26,7 @@ function TrackHeader({ track }: TrackHeaderProps) {
           <Tooltip
             tooltip="Play"
             aria-label="Play track"
-            onClick={() => setUri(`spotify:track:${track.id}`)}
+            onClick={() => play(`spotify:track:${track.id}`)}
             distance="90%"
           >
             <div className={styles.playIcon}>

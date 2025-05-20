@@ -17,6 +17,7 @@ import { useApiRequest } from '@hooks/useApiRequest';
 import { MdLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import PlaylistCard from '@components/PlaylistCard';
+import Spinner from '@components/Spinner';
 
 function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -104,7 +105,7 @@ function DashboardPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>My top artists —</h2>
 
-        {topArtistsStatus === 'loading' && <p>Loading top artists...</p>}
+        {topArtistsStatus === 'loading' && <Spinner />}
 
         <div className={styles.grid}>
           {topArtistsData?.items.map(artist => (

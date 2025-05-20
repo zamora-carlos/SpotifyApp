@@ -60,7 +60,7 @@ function useSpotifyPlayer(token: string | null) {
     };
   }, [token, player]);
 
-  return { player, deviceId };
+  return { player, deviceId, ready: !!player && !!deviceId };
 }
 
 export default useSpotifyPlayer;

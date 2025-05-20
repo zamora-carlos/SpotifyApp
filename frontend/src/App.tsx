@@ -3,14 +3,14 @@ import LoginPage from '@pages/LoginPage';
 import DashboardPage from '@pages/DashboardPage';
 import ArtistPage from '@pages/ArtistPage';
 import CallbackPage from '@pages/CallbackPage';
-import ProtectedRoute from '@components/ProtectedRoute';
 import TrackPage from '@pages/TrackPage';
+import AlbumPage from '@pages/AlbumPage';
 import { AuthProvider } from '@context/AuthContext';
 import { MusicPlayerProvider } from '@context/MusicPlayerContext';
-import AlbumPage from '@pages/AlbumPage';
+import ProtectedRoute from '@components/ProtectedRoute';
 import MusicPlayer from '@components/MusicPlayer';
 
-export default function App() {
+function App() {
   return (
     <AuthProvider>
       <MusicPlayerProvider>
@@ -38,3 +38,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+export default App;

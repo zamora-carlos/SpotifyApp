@@ -10,7 +10,7 @@ type AlbumHeaderProps = {
 };
 
 function AlbumHeader({ album }: AlbumHeaderProps) {
-  const { setUri } = useMusicPlayer();
+  const { play } = useMusicPlayer();
 
   return (
     <section className={styles.container}>
@@ -25,7 +25,7 @@ function AlbumHeader({ album }: AlbumHeaderProps) {
           <Tooltip
             tooltip="Play album"
             aria-label="Play album"
-            onClick={() => setUri(`spotify:album:${album.id}`)}
+            onClick={() => play(`spotify:album:${album.id}`)}
             distance="90%"
           >
             <div className={styles.playIcon}>
