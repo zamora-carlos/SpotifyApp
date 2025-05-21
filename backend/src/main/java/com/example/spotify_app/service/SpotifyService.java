@@ -37,6 +37,8 @@ public class SpotifyService {
                 .build()
                 .toUri();
 
+        System.out.println(uri.toString());
+
         return callSpotifyApi(uri.toString(), token);
     }
 
@@ -47,11 +49,6 @@ public class SpotifyService {
 
     public Map getArtistTopTracks(String id, String token) {
         String url = spotifyConfig.getApiUrl() + "artists/" + id + "/top-tracks";
-        return callSpotifyApi(url, token);
-    }
-
-    public Map getRelatedArtists(String id, String token) {
-        String url = spotifyConfig.getApiUrl() + "artists/" + id + "/related-artists";
         return callSpotifyApi(url, token);
     }
 
@@ -73,7 +70,7 @@ public class SpotifyService {
                 .fromUri(URI.create(spotifyConfig.getApiUrl() + "artists/" + id + "/albums"))
                 .queryParam("limit", limit)
                 .queryParam("offset", offset)
-                .queryParam("include_groups", "album,single") // Optional: filter types of releases
+                .queryParam("include_groups", "album,single")
                 .queryParam("market", "from_token")
                 .build()
                 .toUri();
