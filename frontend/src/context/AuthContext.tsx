@@ -1,5 +1,11 @@
 import { refreshToken } from '@lib/authApi';
-import { createContext, useContext, useCallback, useRef } from 'react';
+import {
+  createContext,
+  useContext,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import type { ReactNode } from 'react';
 import type { TokenResponse } from 'types/tokenResponse.types';
 
@@ -8,22 +14,28 @@ type AuthContextType = {
   login: (tokenResponse: TokenResponse) => void;
   logout: () => void;
   getAccessToken: () => Promise<string | null>;
+  accessToken: string | null;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshPromise = useRef<Promise<string | null> | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(
+    () => localStorage.getItem('accessToken') || null
+  );
 
   const login = useCallback((tokenResponse: TokenResponse) => {
     const expiresAt = new Date(tokenResponse.expiresAt).getTime();
     localStorage.setItem('accessToken', tokenResponse.accessToken);
     localStorage.setItem('accessTokenExpiresAt', expiresAt.toString());
+    setAccessToken(tokenResponse.accessToken);
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('accessTokenExpiresAt');
+    setAccessToken(null);
   }, []);
 
   const getAccessToken = useCallback(async (): Promise<string | null> => {
@@ -34,6 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const expiresAt = storedExpiresAt ? Number(storedExpiresAt) : null;
 
     if (storedToken && expiresAt && Date.now() < expiresAt - bufferMs) {
+      setAccessToken(storedToken);
       return storedToken;
     }
 
@@ -78,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         logout,
         getAccessToken,
+        accessToken,
       }}
     >
       {children}

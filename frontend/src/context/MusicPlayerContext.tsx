@@ -47,12 +47,14 @@ export function MusicPlayerProvider({ children }: { children: ReactNode }) {
   const [seeking, setSeeking] = useState(false);
   const [currentTrack, setCurrentTrack] = useState<Spotify.Track | null>(null);
 
+  const { accessToken } = useAuth();
+
   const { player, deviceId, ready } = useSpotifyPlayer(token);
 
   const { getAccessToken } = useAuth();
   useEffect(() => {
     getAccessToken().then(setToken);
-  }, [getAccessToken]);
+  }, [getAccessToken, accessToken]);
 
   useEffect(() => {
     if (!player) return;
