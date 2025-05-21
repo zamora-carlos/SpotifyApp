@@ -16,8 +16,8 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_SPOTIFY_CLIENT_ID: ${VITE_SPOTIFY_CLIENT_ID}
-        VITE_SPOTIFY_REDIRECT_URI: ${VITE_SPOTIFY_REDIRECT_URI}
+        VITE_SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+        VITE_SPOTIFY_REDIRECT_URI: ${SPOTIFY_REDIRECT_URI}
     container_name: vite-frontend
     ports:
       - "8080:8080"
