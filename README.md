@@ -95,6 +95,31 @@ This project consists of a full-stack application that integrates with the Spoti
 
 ---
 
+## UI
+
+### Login page
+
+<img width="1536" alt="Screenshot 2025-05-21 at 2 12 58 a m" src="https://github.com/user-attachments/assets/3e8363fb-860a-4107-88ad-fbc886e54d3f" />
+
+### Dashboard page
+
+<img width="1536" alt="Screenshot 2025-05-21 at 2 18 01 a m" src="https://github.com/user-attachments/assets/ebc42dd2-3d21-4f71-bc18-08a6f2ae6b4a" />
+
+### Artist details page
+
+<img width="1536" alt="Screenshot 2025-05-21 at 2 18 29 a m" src="https://github.com/user-attachments/assets/df458a89-4851-4fc0-8cfe-6cdc11e7f77d" />
+
+### Album details page
+
+<img width="1536" alt="Screenshot 2025-05-21 at 2 21 09 a m" src="https://github.com/user-attachments/assets/9b766166-4ae7-4da9-b90e-60940af8e159" />
+
+
+### Track details page
+
+<img width="1536" alt="Screenshot 2025-05-21 at 2 20 04 a m" src="https://github.com/user-attachments/assets/cb4d40a0-c82c-4b5a-91ad-d7e962ddee01" />
+
+---
+
 ## API Endpoints
 
 Once the application is running, you can start making HTTP requests to the backend API at http://localhost:9090/api/v1.
